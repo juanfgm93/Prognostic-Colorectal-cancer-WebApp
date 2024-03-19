@@ -39,6 +39,7 @@ def get_prediction(model, input_df):
 
 def home():
     st.title('Colorectal cancer | Prognostic App')
+
     st.image('https://imgur.com/WUcvMwJ.jpg', use_column_width=True)
     st.write("""
             Our app is designed to predict patient prognosis for individuals affected by colorectal cancer. We utilize a combination of 
@@ -56,7 +57,7 @@ def about_colorectal_cancer():
             Throughout this page, you'll find information about this disease, helping you understand the purpose of the predictive app.""")
     st.image('https://imgur.com/8RN35L8.jpg', width=600)
     
-    st.header('Incidence rates top countries')
+    st.header('Incidence rates | Top countries')
     st.write("""
             Colorectal cancer is the third most common cancer worldwide. The table below displays countries with the highest rates of colorectal cancer for both men and women in 2020¹.""")
     st.image('https://imgur.com/cnRlTS0.jpg', width=600)
@@ -96,7 +97,10 @@ def about_colorectal_cancer():
     
 def data_source():
     
-    st.title('Data source')
+    st.title('Data source and visualization')
+    st.write("""In this section, the data sources used to build the prognostic app are displayed. Data were obtained from the TCGA database. 
+             Clinical and demographic data was retrieved using the Genomic Data Commons data portal, and genomic data was obtained using the cBioPortal website.
+             """)
     st.header('The Cancer Genome Atlas - TCGA')
     st.image('https://imgur.com/PVbPDPY.jpg', width=900)
     st.write("""Click on this link to gain access to the site: https://portal.gdc.cancer.gov/
@@ -113,14 +117,16 @@ def data_source():
             """)
       
 def predictions():
-    st.title('Predictions')
-    
+    st.title('CRC Prognosis')
+     # Add introductory text
+    st.write('Please fill out the following form to get the patient prognosis.')
     # Define input fields
-    # Your input fields code here
-    features = {
+    features_patient_data  = {
             'prior_malignancy': 'Yes/No',
             'gender': 'Male/Female',
-            'age_at_index': 'Numerical',
+            'age_at_index': 'Numerical'
+        }   
+    features_mutational_status = {
             'apc': 'Yes/No',
             'tp53': 'Yes/No',
             'kras': 'Yes/No',
@@ -170,7 +176,9 @@ def predictions():
             'dcc': 'Yes/No',
             'bcl9': 'Yes/No',
             'ptpn13': 'Yes/No',
-            'bcorl1': 'Yes/No',
+            'bcorl1': 'Yes/No'
+        }
+    features_gene_expression = {
             'ACVR2A_exp': 'Numerical',
             'AKAP9_exp': 'Numerical',
             'ANK1_exp': 'Numerical',
@@ -217,7 +225,9 @@ def predictions():
             'TNC_exp': 'Numerical',
             'TP53_exp': 'Numerical',
             'TRRAP_exp': 'Numerical',
-            'ZFHX3_exp': 'Numerical',
+            'ZFHX3_exp': 'Numerical'
+        }
+    features_gene_methylation = {
             'ACVR2A_met': 'Numerical',
             'AKAP9_met': 'Numerical',
             'ANK1_met': 'Numerical',
@@ -258,7 +268,9 @@ def predictions():
             'TCF7L2_met': 'Numerical',
             'TNC_met': 'Numerical',
             'TRRAP_met': 'Numerical',
-            'ZFHX3_met': 'Numerical',
+            'ZFHX3_met': 'Numerical'
+        }
+    features_pathologic_stage = {
             'ajcc_pathologic_stage_Stage I': 'Yes/No',
             'ajcc_pathologic_stage_Stage IA': 'Yes/No',
             'ajcc_pathologic_stage_Stage II': 'Yes/No',
@@ -271,7 +283,9 @@ def predictions():
             'ajcc_pathologic_stage_Stage IIIC': 'Yes/No',
             'ajcc_pathologic_stage_Stage IV': 'Yes/No',
             'ajcc_pathologic_stage_Stage IVA': 'Yes/No',
-            'ajcc_pathologic_stage_Stage IVB': 'Yes/No',
+            'ajcc_pathologic_stage_Stage IVB': 'Yes/No'
+        }
+    features_tissue_or_organ_of_origin = {
             'tissue_or_organ_of_origin_Ascending colon': 'Yes/No',
             'tissue_or_organ_of_origin_Cecum': 'Yes/No',
             'tissue_or_organ_of_origin_Colon': 'Yes/No',
@@ -283,7 +297,9 @@ def predictions():
             'tissue_or_organ_of_origin_Sigmoid colon': 'Yes/No',
             'tissue_or_organ_of_origin_Splenic flexure of colon': 'Yes/No',
             'tissue_or_organ_of_origin_Transverse colon': 'Yes/No',
-            'tissue_or_organ_of_origin_Unknown primary site': 'Yes/No',
+            'tissue_or_organ_of_origin_Unknown primary site': 'Yes/No'
+        }
+    features_primary_diagnosis = {
             'primary_diagnosis_Adenocarcinoma': 'Yes/No',
             'primary_diagnosis_Adenocarcinoma in tubolovillous adenoma': 'Yes/No',
             'primary_diagnosis_Adenocarcinoma with mixed subtypes': 'Yes/No',
@@ -292,7 +308,9 @@ def predictions():
             'primary_diagnosis_Carcinoma': 'Yes/No',
             'primary_diagnosis_Mucinous adenocarcinoma': 'Yes/No',
             'primary_diagnosis_Papillary adenocarcinoma': 'Yes/No',
-            'primary_diagnosis_Tubular adenocarcinoma': 'Yes/No',
+            'primary_diagnosis_Tubular adenocarcinoma': 'Yes/No'
+        }
+    features_morphology = {
             'morphology_8010/3': 'Yes/No',
             'morphology_8140/3': 'Yes/No',
             'morphology_8211/3': 'Yes/No',
@@ -301,7 +319,9 @@ def predictions():
             'morphology_8263/3': 'Yes/No',
             'morphology_8480/3': 'Yes/No',
             'morphology_8560/3': 'Yes/No',
-            'morphology_8574/3': 'Yes/No',
+            'morphology_8574/3': 'Yes/No'
+        }
+    features_TNM = {
             'ajcc_pathologic_t_T1': 'Yes/No',
             'ajcc_pathologic_t_T2': 'Yes/No',
             'ajcc_pathologic_t_T3': 'Yes/No',
@@ -323,27 +343,91 @@ def predictions():
             'ajcc_pathologic_m_M1b': 'Yes/No'
         }
 
-    # Add input fields for user input
-    user_input = {}
-    for feature, input_type in features.items():
+    # Add input fields for user input - Patient Data
+    st.header('Patient Data')
+    user_input_patient_data = {}
+    for feature, input_type in features_patient_data.items():
         if input_type == 'Yes/No':
-            user_input[feature] = st.selectbox(feature, ['No', 'Yes'])  # Display Yes/No dropdown
+            user_input_patient_data[feature] = st.selectbox(feature, ['No', 'Yes'])  # Display Yes/No dropdown
         elif input_type == 'Male/Female':
-            user_input[feature] = st.selectbox(feature, ['Male', 'Female'])  # Display Male/Female dropdown
+            user_input_patient_data[feature] = st.selectbox(feature, ['Male', 'Female'])  # Display Male/Female dropdown
         elif input_type == 'Numerical':
             if feature == 'age_at_index':
-                user_input[feature] = st.number_input('Age', min_value=0, max_value=120, value=50)  # Age input
+                user_input_patient_data[feature] = st.number_input('age', min_value=0, max_value=120, value=50)  # Age input
             else:
-                user_input[feature] = st.number_input(feature, value=0)  # Other numerical inputs
+                user_input_patient_data[feature] = st.number_input(feature, value=0)  # Other numerical inputs
+    
+    # Add input fields for user input - Mutational Status
+    st.header('Mutational Status')
+    user_input_mutational_status = {}
+    for feature, input_type in features_mutational_status.items():
+        if input_type == 'Yes/No':
+            user_input_mutational_status[feature] = st.selectbox(feature, ['No', 'Yes'])  # Display Yes/No dropdown
         # Add handling for other input types
 
+    # Add input fields for user input - Expression
+    st.header('Gene expression')
+    user_input_gene_expression = {}
+    for feature, input_type in features_gene_expression.items():
+        if input_type == 'Numerical':
+            user_input_gene_expression[feature] = st.number_input(feature, value=0)  # Numerical inputs
+    
+    # Add input fields for user input - Methylation
+    st.header('Gene methylation')
+    st.write("""Please, enter a numerical value between 0 and 1
+             """)
+    user_input_gene_methylation = {}
+    for feature, input_type in features_gene_methylation.items():
+        if input_type == 'Numerical':
+            user_input_gene_methylation[feature] = st.number_input(feature, min_value=0, max_value=1, value=0)  # Numerical inputs
+    
+    # Add input fields for user input - pathologic stage
+    st.header('Pathologic stage')
+    user_input_pathologic_stage = {}
+    for feature, input_type in features_pathologic_stage.items():
+        if input_type == 'Yes/No':
+            user_input_pathologic_stage[feature] = st.selectbox(feature, ['No', 'Yes'])  # Display Yes/No dropdown
+    
+    # Add input fields for user input - tissue or organ of origin
+    st.header('Tissue or organ of origin')
+    user_input_organ_of_origin = {}
+    for feature, input_type in features_tissue_or_organ_of_origin.items():
+        if input_type == 'Yes/No':
+            user_input_organ_of_origin[feature] = st.selectbox(feature, ['No', 'Yes'])  # Display Yes/No dropdown
+
+    # Add input fields for user input - primary diagnosis
+    st.header('Primary diagnosis')
+    user_input_primary_diagnosis = {}
+    for feature, input_type in features_primary_diagnosis.items():
+        if input_type == 'Yes/No':
+            user_input_primary_diagnosis[feature] = st.selectbox(feature, ['No', 'Yes'])  # Display Yes/No dropdown
+    
+    # Add input fields for user input - morphology
+    st.header('Tumor morphology')
+    user_input_morphology = {}
+    for feature, input_type in features_morphology.items():
+        if input_type == 'Yes/No':
+            user_input_morphology[feature] = st.selectbox(feature, ['No', 'Yes'])  # Display Yes/No dropdown
+    
+    # Add input fields for user input - TNM
+    st.header('TNM staging')
+    user_input_TNM = {}
+    for feature, input_type in features_TNM.items():
+        if input_type == 'Yes/No':
+            user_input_TNM[feature] = st.selectbox(feature, ['No', 'Yes'])  # Display Yes/No dropdown
+    
+    # Combine user inputs from different categories
+    user_input = {**user_input_patient_data, **user_input_mutational_status, **user_input_gene_expression, 
+                  **user_input_gene_methylation, **user_input_pathologic_stage, **user_input_organ_of_origin,
+                  **user_input_primary_diagnosis,**user_input_morphology,**user_input_TNM}
+    
     # Convert user inputs to model input format
     for feature, value in user_input.items():
-        if features[feature] == 'Yes/No':
+        if input_type  == 'Yes/No':
             user_input[feature] = 1 if value == 'Yes' else 0  # Convert Yes/No to 1/0
-        elif features[feature] == 'Male/Female':
+        elif input_type  == 'Male/Female':
             user_input[feature] = 1 if value == 'Male' else 0  # Convert Male/Female to 1/0
-
+    
     input_df = pd.DataFrame([user_input])
 
     if st.button('Predict'):
@@ -374,10 +458,21 @@ def main():
     pages = {
         "Home": home,
         "About Colorectal Cancer": about_colorectal_cancer,
-        "Data source": data_source,
+        "Data source and visualization": data_source,
         "Predictions": predictions
     }
+    st.markdown("""
+        <style>
+            .sidebar-image-container {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px; /* Adjust as needed */
+            }
+        </style>
+    """, unsafe_allow_html=True)
 
+    # Add the image to the sidebar
+    st.sidebar.markdown('<div class="sidebar-image-container"><img src="https://imgur.com/ivXCEUY.jpg" width="300"/></div>', unsafe_allow_html=True)
     st.sidebar.title('Navigation')
     selection = st.sidebar.radio("Go to", list(pages.keys()))
 
