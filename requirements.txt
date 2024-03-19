@@ -1,5 +1,4 @@
 Streamlit==1.32.2
 Pandas==2.2.1
 NumPy==1.26.4
-Pickle==4.0
 Scikit-learn==1.2.2
