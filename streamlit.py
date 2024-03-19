@@ -47,6 +47,27 @@ def home():
              Colorectal cancer is a prevalent form of cancer that affects the colon or rectum. By analyzing various factors such as age, gender, 
              prior medical history, genetic mutations, and tumor characteristics, our models provide valuable insights into the likely prognosis of patients.
              """)
+    st.write("""""")
+    st.write("""""")
+    st.write("""""")
+    st.write("""""")
+    st.write("""""")
+
+    # Add text
+    col1, col2 = st.columns([3, 7])  # Define columns
+    with col1:
+        st.write("""
+            **Contributors**:
+            - Juan F. García-Moreno
+            - https://github.com/juanfgm93
+        """)
+
+    # Add some space
+    st.write(" ")
+
+    # Add image with alignment to the right
+    with col2:
+        st.image('https://imgur.com/OZh9uca.jpg', width=90)
 
 
 def about_colorectal_cancer():
