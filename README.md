@@ -14,7 +14,7 @@ The purpose of this Web App is to predict patient prognosis for individuals affe
 
 Clinical and demographic data were obtained from the Genome Data Commons data portal, while genomic data, including gene mutations, gene expression, and methylation, was retrieved from the cBioPortal website.
 
-The link for the Web App is this one:
+The link for the Web App is this one: https://juanfgm93-prognostic-colorectal-cancer--my-streamlit-app-dtcbzd.streamlit.app/
 
 Visualizations in Tableau are available in the following link: https://public.tableau.com/app/profile/juan.garc.a.moreno/viz/ColorectalcancerTCGAproject/CRCstory?publish=yes
 
